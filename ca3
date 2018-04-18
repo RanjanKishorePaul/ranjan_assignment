@@ -1,0 +1,173 @@
+#include <stdio.h>
+#include <time.h>
+struct process
+{
+        int id;
+        int arrival;
+        int burst;
+        int rem;
+        int wait;
+        int finish;
+        int turnaround;
+        float ratio;
+}pro[10]; 
+struct process p1;
+int no;
+int test_p(int);
+int next_p();
+void Round_Robin(int, int, int[], int[]);
+void main()
+{
+	int choice;
+	clock_t clock;
+	int n,R_time,temp,i;
+	int quantam,mark;
+    int brusttime[10],servicetimet[10],i,j,k;
+	printf("\n\n\t WELCOME TO THE OS ASSIGNMENT \n NAME:-RANJAN KISHORE PAUL\n REG. NO:-11705820");
+	printf("\n ENTER ANY KEY TO BEGIN THE STIMULATION AFTER READING THE GIVEN POINTS:-\n 1> THIS STIMULATION IS DIVIDED INTO TWO PARTS\n 2> THE FIRST PART CONTAINS THE 1st QUESTION \n 3> THE SECOND QUESTION CONTAIN THE SECOND QUESTION\n 4> THE CODE IS DIVIDED WITH THE HELP OF SWITCH STATEMENT" );
+	getch();
+	mark:
+	printf("\n \n \t *** I N D E X ***");
+	printf("\n 1. ENTER 1 FOR EXECUTING THE CODE OF INTRAVTIVE AND NON-INTRACTIVE PROCESS" );
+	printf("\n 2. ENTER 2 FOR EXECUTING THE CODE OF ROUND ROBIN SCHEDULING ALGO");
+	printf("\n 3. ENTER 3 FOR EXITING THE PROGRAM");
+	printf("\n ENTER YOUR CHOICE");
+	scanf("%d",&choice);
+	switch(choice)
+	{
+		case 1:
+			{
+				printf("\n\nDEPENDING OF YOUR INPUT FIND WEATHER THE PROCESS IS INTRACTIVE OR NON-INTRACTIVE\n");
+	            printf("ENTER THE NUMBER OF PROCESS:- \n");
+	            scanf("%d",&n);
+	            for(i=0;i<n;i++)
+	            {
+		            printf("FOR PROCESS %d ENTER IT'S RESPONCE TIME :- \n",i);
+		            while (1)
+		            {
+			           scanf("%d",&R_time);
+			           if(R_time!=NULL)
+			           {
+				           temp=timer;
+				            break;
+			           }
+		            } 
+		            if(R_time==1)
+		            {
+			            printf("\n\t IT IS INTRACTIVE PROCESS.....\n");		
+		            }
+		            else
+			        {
+					  printf("\n\t IT IS NON-INTRACTIVE PORCESS......\n");
+					}
+	            }
+				break;
+			}
+		case 2:
+			{
+				printf("\n CHECK FOR THE CODE FOR TE ROUND ROBIN SCHEDULING ALGORITHM");
+				printf("Enter number of processes:\n");
+                scanf("%d",&n);
+                printf("\n Enter burst time for sequences:");
+                for(i=0;i<n;i++)
+                {
+                  scanf("%d",&brusttime[i]);
+                  servicetime[i]=brusttime[i];    
+                }
+                printf("Enter time quantum:");
+                scanf("%d",&quantam);
+                roundrobin(n,quantam,servicetime,brusttime);
+				break;
+			}
+		case 3:
+		    {
+		    	printf("\n THANKU THE PROGRAM WILL TERMINATE SHORTLY");
+		    	break;
+		    }	
+		default:
+			{
+				printf("\n PLESE ENTER A VALID OPTION");
+			}
+	}
+	if(choice!=3)
+	{
+		printf("\n YOU HAVE NOT SELECTED TO QUIT THE STIMULATION  SO WE WILL BEGEN AGAIN");
+		goto mark;
+	}
+}
+
+void Round_Robin(int n,int quantam,int servicetime[],int brusttime[])
+
+ {                 
+int time=0;
+          int trundaroundtime[10],waitingtime[10],i,count=0,swt=0,stat=0,temp1,sq=0,j,k;
+          float avgwattime=0.0,avgtrundaaroundtime=0.0;
+         while(1)
+           {
+             for(i=0,count=0;i<n;i++)
+             {
+       temp1=quantam;
+       if(servicetime[i]==0)
+       {
+         count++;
+         continue;
+       }
+       if(servicetime[i]>quantam)
+       {
+                servicetime[i]=servicetime[i]-quantam;
+       }
+	   else
+	   {
+        if(servicetime[i]>=0)
+        {
+                 temp1=servicetime[i]; 
+                 servicetime[i]=0; 
+        }
+        sq=sq+temp1; 
+        trundaroundtime[i]=sq;
+       }
+     }
+     if(n==count)
+     {
+     break; 
+     }
+     } 
+   for(i=0;i<n;i++) 
+   {
+    waitingtime[i]=trundaroundtime[i]-brusttime[i]; 
+    swt=swt+waitingtime[i]; 
+    stat=stat+trundaroundtime[i];
+   }
+   avgwaintingtime=(float)swt/n; 
+   avgtrundaroundtime=(float)stat/n; 
+   printf("Process_no        Burst time        Wait time        Turn around time\n");
+   for(i=0;i<n;i++)
+    printf("%d\t\t%d\t\t%d\t\t%d\n",i+1,brusttimet[i],waitingtime[i],trunaroundtime[i]);
+    printf("Avg wait time is %f\n Avg turn around time is %f\n",avgwaitingtime,avgtrundaroundtime);
+   }
+
+int test_p(int s) 
+
+{
+        int i;
+        for(i = 1; i <= s; i++)
+        {
+                if(process[i].rem != 0)
+                        return 1;
+        }
+        return 0;
+} 
+int next_p() 
+{
+        int min, l, i;
+        min = 1500; 
+        for(i = 1; i <= no; i++)
+        {
+                if( process[i].rem!=0 && process[i].rem < min)
+                {
+                        min = process[i].rem;
+                        l = i;
+                }
+        }
+        return 1;
+}
